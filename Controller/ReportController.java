@@ -3,6 +3,7 @@ package Controller;
 import Models.Report;
 import Models.ReportModel;
 import Observer.Observer;
+import Views.ConsoleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class ReportController {
     private static ReportController instance;
     private final List<Observer> attachedObserver = new ArrayList<>();
     private final ReportModel reportModel = ReportModel.getInstance();
+    private final ConsoleView consoleView = new ConsoleView();
 
     private ReportController(){}
 
@@ -33,11 +35,15 @@ public class ReportController {
     }
 
     public boolean addObserver(Observer v) {
-        return attachedObserver.add(v);
+        boolean res = attachedObserver.add(v);
+        consoleView.outLine("Observer " + v.getName() + " zur Liste der Observer hinzugefügt.");
+        return res;
     }
 
     public boolean removeObserver(Observer v) {
-        return attachedObserver.remove(v);
+        boolean res = attachedObserver.remove(v);
+        consoleView.outLine("Observer " + v.getName() + " aus Liste der Observer gelöscht.");
+        return res;
     }
 
     public List<Report> exportList() {
