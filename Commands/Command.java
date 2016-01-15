@@ -7,5 +7,6 @@ import Exceptions.UserExitException;
  */
 public interface Command {
     void execute(String[] args) throws UserExitException;
+    void undo();
     String getName();
 }

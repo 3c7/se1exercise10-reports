@@ -3,6 +3,7 @@ package Controller;
 import Models.Report;
 import Models.ReportModel;
 import Observer.Observer;
+import Views.ConsoleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class ReportController {
     private static ReportController instance;
     private final List<Observer> attachedObserver = new ArrayList<>();
     private final ReportModel reportModel = ReportModel.getInstance();
+    private final ConsoleView consoleView = new ConsoleView();
 
     private ReportController(){}
 
@@ -24,19 +26,26 @@ public class ReportController {
 
     public void addReport(Report r) {
         reportModel.addReport(r);
-        attachedObserver.forEach(Observer::update);
+        attachedObserver.forEach(observer -> observer.update(reportModel.exportList()));
     }
 
     public void removeLastReport() {
         reportModel.removeLastReport();
-        attachedObserver.forEach(Observer::update);
+        attachedObserver.forEach(observer -> observer.update(reportModel.exportList()));
+    }
+
+    public void removeReport(int id) {
+        reportModel.removeReport(id);
+        attachedObserver.forEach(observer -> observer.update(reportModel.exportList()));
     }
 
     public boolean addObserver(Observer v) {
+        consoleView.outLine("Observer " + v.getName() + " zur Liste der Observer hinzugefügt.");
         return attachedObserver.add(v);
     }
 
     public boolean removeObserver(Observer v) {
+        consoleView.outLine("Observer " + v.getName() + " zur Liste der Observer gelöscht.");
         return attachedObserver.remove(v);
     }
 

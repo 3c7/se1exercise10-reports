@@ -18,14 +18,12 @@ public class UndoCommand implements Command {
             consoleView.outLine("Nothing to UNDO.");
             return;
         }
-
         Command lastCommand = commandStackModel.removeCommand();
 
-        // Undo's for other commands need to be configured here
-        if (lastCommand.getName().equals("add")) {
-            reportController.removeLastReport();
-        }
+        if (lastCommand instanceof UndoableCommand) lastCommand.undo();
     }
+
+    public void undo() {}
 
     public String getName() {
         return NAME;

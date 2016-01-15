@@ -14,10 +14,8 @@ public class ListView implements Observer {
     private final ReportController reportController = ReportController.getInstance();
     private final String NAME = "ListView";
 
-    public void update() {
-        List<Report> list;
+    public void update(List<Report> list) {
         consoleView.outLine(getName() + ": ");
-        list = reportController.exportList();
         if (list.size() > 0)
             for (int i=1;i<=list.size();i++) {
                 consoleView.outLine("Report Nr. " + i + ": (\"" + list.get(i-1).getContentString() + "\")");
